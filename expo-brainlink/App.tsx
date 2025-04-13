@@ -4,8 +4,7 @@ import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator } from 're
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import AdminDashboard from './screens/AdminDashboard';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';import PlaceholderScreen from './screens/PlaceholderScreen';
 
 const firebaseConfig = { apiKey: "AIzaSyCsC69twn_ehvlxwjIE1u3mCHS4OiEw5ds", authDomain: "the-estate-hub.firebaseapp.com", projectId: "the-estate-hub", storageBucket: "the-estate-hub.appspot.com", messagingSenderId: "904129270236", appId: "1:904129270236:web:bee663ceacbf8210ceff19", measurementId: "G-GEMH1F52Y1" };
 
@@ -46,7 +45,11 @@ export default function App(): JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={user ? "Dashboard" : "Login"}>
+        {user ? (
+          <Stack.Screen name="Dashboard" options={{ headerShown: false }}>
+            {() => <PlaceholderScreen />}
+          </Stack.Screen>
         {user ? (          <Stack.Screen name="Dashboard" component={AdminDashboard} options={{ headerShown: false }} />
         ) : (
           <Stack.Screen name="Login" options={{ headerShown: false }}>
