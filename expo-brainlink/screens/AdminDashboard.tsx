@@ -46,43 +46,19 @@ const AdminDashboard = () => {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
-    fetchDashboardData();
     fetchAnnouncements();
   }, []);
-
-      setIsLoading(true);
-
-      // Mock data for demonstration
-      setStats({
-        totalUsers: 125,
-        totalOffers: 450,
-        totalTransactions: 2500000,
-        activeAgents: 75
-      });
-
-      // Mock activities
-      setActivities([
-        {
-          id: '1',
-          type: 'user',
-          description: 'Nowy użytkownik dołączył do platformy',
-          created_at: new Date().toISOString()
-        },
-        {
-          id: '2',
-          type: 'offer',
-          description: 'Dodano nową ofertę sprzedaży',
-          created_at: new Date(Date.now() - 3600000).toISOString()
-        },
-        {
-          id: '3',
-          type: 'transaction',
-          description: 'Zakończono transakcję sprzedaży',
-          created_at: new Date(Date.now() - 7200000).toISOString()
-        }
-      ]);
+  
+    setIsLoading(true);
+    try {
+      const fetchedAnnouncements = await announcementService.getAnnouncements();
+      setAnnouncements(fetchedAnnouncements);
+    } catch (error) {
+      console.error("Error fetching announcements:", error);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, []);
 
   const fetchAnnouncements = async () => {
     try {
@@ -124,88 +100,18 @@ const AdminDashboard = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.statsContainer}>
-        <View style={styles.statCard}>
-          <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>Użytkownicy</Text>
-            <MaterialIcons name="people" size={24} color="gray" />
-          </View>
-          <Text style={styles.statValue}>{stats.totalUsers}</Text>
+
+
+
+
+
+      {announcements.map((announcement) => (
+        <View key={announcement.id} style={styles.announcementItem}>
+          <Text style={styles.announcementTitle}>{announcement.title}</Text>
+          <Text>{announcement.content}</Text>
+          <Text style={styles.announcementTimestamp}>{new Date(announcement.createdAt).toLocaleString()}</Text>
         </View>
-
-        <View style={styles.statCard}>
-          <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>Oferty</Text>
-            <MaterialIcons name="home" size={24} color="gray" />
-          </View>
-          <Text style={styles.statValue}>{stats.totalOffers}</Text>
-        </View>
-
-        <View style={styles.statCard}>
-          <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>Transakcje</Text>
-            <Feather name="trending-up" size={24} color="gray" />
-          </View>
-          <Text style={styles.statValue}>{stats.totalTransactions.toLocaleString()} PLN</Text>
-        </View>
-
-        <View style={styles.statCard}>
-          <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>Aktywni agenci</Text>
-            <MaterialIcons name="verified-user" size={24} color="gray" />
-          </View>
-          <Text style={styles.statValue}>{stats.activeAgents}</Text>
-        </View>
-      </View>
-
-      <View style={styles.activitiesContainer}>
-        <Text style={styles.sectionTitle}>Ostatnie aktywności</Text>
-        {activities.length > 0 ? (
-          activities.map((activity) => (
-            <View key={activity.id} style={styles.activityItem}>
-              <View>
-                <Text style={styles.activityDescription}>{activity.description}</Text>
-                <Text style={styles.activityTimestamp}>{new Date(activity.created_at).toLocaleString()}</Text>
-              </View>
-              <MaterialIcons name="person" size={20} color="gray" />
-            </View>
-          ))
-        ) : (
-          <Text style={styles.noActivitiesText}>Brak ostatnich aktywności</Text>
-        )}
-      </View>
-
-      <View style={styles.announcementsContainer}>
-        <Text style={styles.sectionTitle}>Office Announcements</Text>
-        {announcements.length > 0 ? (
-          announcements.map((announcement) => (
-            <View key={announcement.id} style={styles.announcementItem}>
-              <Text style={styles.announcementTitle}>{announcement.title}</Text>
-              <Text style={styles.announcementContent}>{announcement.content}</Text>
-              <Text style={styles.announcementTimestamp}>
-                {new Date(announcement.createdAt).toLocaleString()}
-              </Text>
-            </View>
-          ))
-        ) : (
-          <Text style={styles.noAnnouncementsText}>No announcements yet.</Text>
-        )}
-      </View>
-
-
-
-
-
-
-
-
-
-
-      {/* System Statistics - Adapt as needed for mobile */}
-      <View style={styles.systemStatsContainer}>
-        <Text style={styles.sectionTitle}>Statystyki systemu</Text>
-        {/* Replace with relevant mobile-friendly stats or remove */}
-        <Text style={styles.placeholderText}>System statistics will be displayed here (adapt for mobile).</Text>
+      ))}
       </View>
     </ScrollView>
   );
@@ -249,69 +155,22 @@ const styles = StyleSheet.create({
     color: 'red',
     marginLeft: 5,
   },
-  statsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  statCard: {
-    backgroundColor: '#1E1E2F', // Example dark card background
-    borderRadius: 10,
-    padding: 15,
-    width: '48%', // Adjust for desired layout
-    marginBottom: 10,
-  },
-  statHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  statLabel: {
-    color: 'gray',
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  activitiesContainer: {
-    backgroundColor: '#1E1E2F',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 20,
-  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
     marginBottom: 10,
   },
-  activityItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#2E2E40',
-  },
-  activityDescription: {
-    color: 'white',
-  },
-  activityTimestamp: {
-    fontSize: 12,
-    color: 'gray',
-  },
-  noActivitiesText: {
-    textAlign: 'center',
-    color: 'gray',
-    paddingVertical: 20,
-  }, announcementsContainer: {
-    backgroundColor: '#1E1E2F',
-    borderRadius: 10,
+  announcementItem: {
     padding: 15,
-    marginBottom: 20,
+    backgroundColor: '#2E2E40',
+    borderRadius: 8,
+    marginBottom: 10,
+  }, sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 10,
   },
   announcementItem: {
     padding: 15,
