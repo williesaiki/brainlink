@@ -1,0 +1,652 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  html {
+    font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth !important;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-black text-white min-h-screen w-full overflow-x-hidden;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 md:px-8 rounded-lg w-full md:w-auto
+           transition-all duration-300 transform hover:scale-105 shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-gray-600 text-gray-600 hover:bg-gray-600/10 w-full md:w-auto
+           font-semibold py-3 px-8 rounded-lg transition-all duration-300;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-center text-white;
+  }
+
+  .feature-card {
+    @apply bg-gray-900 p-4 md:p-6 rounded-xl backdrop-blur-sm border border-gray-800
+           hover:border-gray-600/50 transition-all duration-300;
+  }
+
+  .container {
+    @apply px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl w-full;
+  }
+
+  .section {
+    @apply py-12 sm:py-16 md:py-20 w-full;
+  }
+
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6;
+  }
+
+  .flex-responsive {
+    @apply flex flex-col md:flex-row items-start md:items-center gap-4;
+  }
+}
+
+/* Animated Background */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.85));
+  overflow: hidden;
+}
+
+.city-skyline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: 
+    linear-gradient(transparent 50%, rgba(0, 0, 0, 0.8) 80%),
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0h10v100H30zM50 0h10v100H50zM70 0h10v100H70zM10 0h10v100H10z' fill='%23333333' fill-opacity='0.4'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23333333' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  animation: moveSkyline 60s linear infinite;
+}
+
+@keyframes moveSkyline {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  50% {
+    transform: translateX(-25%) scale(1.1);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Disable animations */
+@media (prefers-reduced-motion: reduce) {
+  .animated-bg,
+  .city-skyline {
+    animation: none;
+  }
+}
+
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.5;
+}
+
+.process-step {
+  @apply relative z-10 bg-black inline-block p-4 rounded-full mb-6 transition-all duration-300;
+}
+
+.process-step.active {
+  @apply scale-110;
+}
+
+.process-step .icon-wrapper {
+  @apply bg-gray-800/50 p-4 rounded-full transition-all duration-300;
+}
+
+.process-step.active .icon-wrapper {
+  @apply bg-gray-600/50;
+}
+
+.testimonial-carousel .slick-track {
+  display: flex !important;
+  gap: 1rem;
+}
+
+.testimonial-carousel .slick-slide {
+  height: inherit !important;
+}
+
+.testimonial-carousel .slick-slide > div {
+  height: 100%;
+}
+
+/* Platform styles */
+.platform-sidebar {
+  @apply bg-gray-900 text-white border-r border-gray-800 w-64 flex-shrink-0;
+}
+
+.platform-content {
+  @apply bg-black flex-grow min-h-screen overflow-y-auto;
+}
+
+/* Form animations */
+.form-input-shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translateX(-1px);
+  }
+  20%, 80% {
+    transform: translateX(2px);
+  }
+  30%, 50%, 70% {
+    transform: translateX(-4px);
+  }
+  40%, 60% {
+    transform: translateX(4px);
+  }
+}
+
+/* Success animation */
+.login-success {
+  animation: successPulse 0.5s ease-in-out;
+}
+
+@keyframes successPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(96, 105, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(96, 105, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(96, 105, 255, 0);
+  }
+}
+
+/* Mobile menu transition */
+.mobile-menu-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.mobile-menu-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.mobile-menu-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mobile-menu-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Line clamp for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Dashboard layout */
+.dashboard-sidebar {
+  @apply h-screen overflow-y-auto fixed lg:relative top-0 left-0 z-40 w-64 transform -translate-x-full lg:translate-x-0 transition-transform duration-300;
+}
+
+.dashboard-content {
+  @apply h-screen overflow-y-auto flex-grow pt-16 lg:pt-0;
+}
+
+/* Landing page can scroll */
+.landing-page {
+  @apply min-h-screen w-full overflow-x-hidden;
+}
+
+/* Responsive spacing utilities */
+.responsive-padding {
+  @apply p-4 sm:p-6 md:p-8;
+}
+
+.responsive-margin {
+  @apply m-4 sm:m-6 md:m-8;
+}
+
+/* Responsive text utilities */
+.responsive-text {
+  @apply text-sm sm:text-base md:text-lg;
+}
+
+.responsive-heading {
+  @apply text-xl sm:text-2xl md:text-3xl font-bold;
+}
+
+/* Install button styling */
+#installButton {
+  padding: 10px 20px;
+  background-color: #000008;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#installButton:hover {
+  background-color: #1a1a2a;
+  transform: scale(1.02);
+}
+
+/* React Big Calendar custom styles */
+.rbc-calendar {
+  background-color: #010220;
+  color: white; 
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.rbc-header {
+  background-color: rgba(28, 37, 67, 0.6);
+  color: white;
+  padding: 10px 6px;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(59, 68, 94, 0.4);
+}
+
+.rbc-month-view {
+  border: 1px solid rgba(59, 68, 94, 0.4);
+  border-radius: 0.5rem;
+  overflow: hidden; 
+}
+
+.rbc-day-bg {
+  background-color: rgba(15, 23, 41, 0.3);
+}
+
+.rbc-off-range-bg {
+  background-color: rgba(10, 14, 25, 0.3);
+}
+
+.rbc-today {
+  background-color: rgba(28, 37, 67, 0.4);
+}
+
+.rbc-event {
+  background-color: rgba(59, 68, 94, 0.8);
+  border-color: rgba(90, 99, 121, 0.6);
+  color: white; 
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.rbc-event.rbc-selected {
+  background-color: rgba(90, 99, 121, 0.9);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2); 
+}
+
+.rbc-slot-selection {
+  background-color: rgba(90, 99, 121, 0.8);
+}
+
+.rbc-toolbar button {
+  color: white;
+  background-color: rgba(28, 37, 67, 0.6); 
+  border: 1px solid rgba(59, 68, 94, 0.4);
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.rbc-toolbar button:hover {
+  background-color: rgba(59, 68, 94, 0.8);
+  color: white;
+}
+
+.rbc-toolbar button.rbc-active {
+  background-color: rgba(90, 99, 121, 0.8);
+  color: white; 
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.rbc-time-view {
+  border: 1px solid rgba(59, 68, 94, 0.4);
+  border-radius: 0.5rem;
+}
+
+.rbc-time-header {
+  background-color: rgba(28, 37, 67, 0.6);
+  border-color: rgba(59, 68, 94, 0.4); 
+}
+
+.rbc-time-content {
+  border-color: rgba(59, 68, 94, 0.4);
+}
+
+.rbc-time-slot {
+  border-color: rgba(59, 68, 94, 0.3); 
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-color: rgba(59, 68, 94, 0.3);
+}
+
+.rbc-timeslot-group {
+  border-color: rgba(59, 68, 94, 0.4); 
+}
+
+.rbc-agenda-view table.rbc-agenda-table {
+  border-color: rgba(59, 68, 94, 0.4);
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td {
+  border-color: rgba(59, 68, 94, 0.4); 
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  border-color: rgba(59, 68, 94, 0.4);
+}
+
+/* Additional calendar styling for a more elegant look */
+.rbc-row {
+  border-color: rgba(59, 68, 94, 0.3); 
+}
+
+.rbc-date-cell {
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+}
+
+.rbc-day-bg:hover { 
+  background-color: rgba(28, 37, 67, 0.2);
+}
+
+.rbc-show-more {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.rbc-toolbar {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.rbc-btn-group {
+  background-color: rgba(15, 23, 41, 0.3);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.rbc-day-slot .rbc-events-container {
+  margin-right: 1px; 
+}
+
+/* Fix for day view events not showing */
+.rbc-day-slot .rbc-events-container {
+  margin-right: 0 !important;
+  width: 100% !important;
+}
+
+.rbc-day-slot .rbc-event {
+  position: absolute;
+  z-index: 2;
+  width: calc(100% - 10px) !important;
+  left: 5px !important;
+  right: 5px !important;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 2px 5px;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+/* Improve current time indicator */
+.rbc-current-time-indicator {
+  background-color: rgba(255, 100, 100, 0.7);
+  height: 2px;
+  position: relative;
+}
+
+.rbc-current-time-indicator::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255, 100, 100, 0.9);
+  transform: translateY(-3px);
+}
+
+/* All-day events styling */
+.rbc-allday-cell {
+  background-color: rgba(15, 23, 41, 0.4);
+  border-bottom: 1px solid rgba(59, 68, 94, 0.4);
+}
+
+.rbc-allday-cell .rbc-event {
+  background-color: rgba(59, 68, 94, 0.8);
+  border-color: rgba(90, 99, 121, 0.6);
+}
+
+/* Fix for time gutter */
+.rbc-time-gutter .rbc-timeslot-group {
+  text-align: center;
+}
+
+.rbc-time-view .rbc-time-gutter {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile optimizations for calendar */
+@media (max-width: 640px) {
+  .rbc-toolbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .rbc-toolbar button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .rbc-header {
+    padding: 8px 4px;
+    font-size: 0.75rem;
+  }
+  
+  .rbc-date-cell {
+    padding: 2px;
+    font-size: 0.75rem;
+  }
+  
+  .rbc-event {
+    padding: 1px 3px;
+    font-size: 0.7rem;
+  }
+  
+  .rbc-day-slot .rbc-event {
+    min-height: 16px;
+  }
+}
+
+/* Day view improvements */
+.rbc-time-view {
+  background-color: rgba(15, 23, 41, 0.3);
+}
+
+.rbc-time-view .rbc-time-header-content {
+  border-color: rgba(59, 68, 94, 0.4);
+}
+
+.rbc-time-view .rbc-time-content {
+  border-top: 1px solid rgba(59, 68, 94, 0.4);
+}
+
+.rbc-time-view .rbc-time-gutter {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.rbc-current-time-indicator {
+  background-color: rgba(255, 100, 100, 0.7);
+  height: 2px;
+  position: relative;
+}
+
+.rbc-current-time-indicator::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255, 100, 100, 0.9);
+  transform: translateY(-3px);
+}
+
+/* Fix for day view events not showing */
+.rbc-day-slot .rbc-events-container {
+  margin-right: 0 !important;
+  width: 100% !important;
+}
+
+.rbc-day-slot .rbc-event {
+  position: absolute;
+  z-index: 2;
+  width: calc(100% - 10px) !important;
+  left: 5px !important;
+  right: 5px !important;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 2px 5px;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+/* Mobile time picker styles */
+@media (max-width: 768px) {
+  .time-picker-container {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    border-radius: 8px;
+    background-color: rgba(15, 23, 41, 0.8);
+    margin: 10px 0;
+  }
+  
+  .time-picker-scroll {
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    padding: 80px 0;
+  }
+  
+  .time-picker-item {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s;
+  }
+  
+  .time-picker-item.selected {
+    color: white;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+  
+  .time-picker-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 23, 41, 0.9) 0%,
+      rgba(15, 23, 41, 0.2) 20%,
+      rgba(15, 23, 41, 0) 40%,
+      rgba(15, 23, 41, 0) 60%,
+      rgba(15, 23, 41, 0.2) 80%,
+      rgba(15, 23, 41, 0.9) 100%
+    );
+  }
+  
+  .time-picker-center-line {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
