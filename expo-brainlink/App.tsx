@@ -50,33 +50,17 @@ export default function App(): JSX.Element {
           <Stack.Screen name="Dashboard" options={{ headerShown: false }}>
             {() => <PlaceholderScreen />}
           </Stack.Screen>
-        {user ? (          <Stack.Screen name="Dashboard" component={AdminDashboard} options={{ headerShown: false }} />
-        ) : (
-          <Stack.Screen name="Login" options={{ headerShown: false }}>
-            {() => (
-              <View style={styles.container}>
-                <Text>Login</Text>
-                {error ? <Text style={styles.errorText}>{error}</Text> : null}
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Password"
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry
-                />
-                {loading ? (<ActivityIndicator size="large" color="#0000ff" />) : (<Button title="Login" onPress={handleLogin} />)}
-                <StatusBar style="auto" />
-              </View>
-            )}
-          </Stack.Screen>
+        ) : ( <Stack.Screen name="Login" options={{ headerShown: false }}>
+          {() => ( <View style={styles.container}>
+            <Text>Login</Text>
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+            <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
+            <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+            {loading ? (<ActivityIndicator size="large" color="#0000ff" />) : (<Button title="Login" onPress={handleLogin} />)}
+            <StatusBar style="auto" />
+          </View>
+          )}
+        </Stack.Screen>
         )}
       </Stack.Navigator>
     </NavigationContainer>
