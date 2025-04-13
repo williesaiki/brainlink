@@ -81,7 +81,7 @@ const AdminDashboard = () => {
           created_at: new Date(Date.now() - 7200000).toISOString()
         }
       ]);
-    };
+    }
   };
 
   const fetchAnnouncements = async () => {
