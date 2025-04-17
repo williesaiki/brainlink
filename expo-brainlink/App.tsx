@@ -117,7 +117,7 @@ export default function App(): JSX.Element {
       </Stack.Navigator>
     </NavigationContainer>
   );
-},
+}
 
 const styles = StyleSheet.create({
   container: {
