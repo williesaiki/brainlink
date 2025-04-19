@@ -48,8 +48,8 @@ export default function App(): JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? "Dashboard" : "Login"}>
-        {user ? (
+      <Stack.Navigator initialRouteName={user ? "Dashboard" : "Login"}>{user ? (
+
           <Stack.Screen name="Dashboard" options={{ headerShown: false }}>
             {() => <PlaceholderScreen />}
           </Stack.Screen>
