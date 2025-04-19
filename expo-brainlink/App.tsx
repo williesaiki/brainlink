@@ -71,7 +71,7 @@ export default function App(): JSX.Element {
 
                   <View style={styles.form}>
                     <View style={styles.inputContainer}>
-                      <Mail name="mail" size={20} color={colors.icon.primary} style={styles.inputIcon} />
+                      <Mail name="email" size={20} color={colors.icon.primary} style={styles.inputIcon} />
                       <TextInput
                         style={styles.input}
                         placeholder="Email"
